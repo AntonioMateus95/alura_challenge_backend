@@ -1,6 +1,7 @@
 package br.com.alura.budgetapi.controller;
 
 import br.com.alura.budgetapi.controller.request.RevenueRequest;
+import br.com.alura.budgetapi.controller.response.RevenueListResponse;
 import br.com.alura.budgetapi.controller.response.RevenueResponse;
 import br.com.alura.budgetapi.exceptions.CustomException;
 import br.com.alura.budgetapi.model.Revenue;
@@ -36,5 +37,11 @@ public class RevenueController {
         } else {
             throw new CustomException("Receita já existe dentro do mês", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping
+    public List<RevenueListResponse> list() {
+        List<Revenue> revenues = revenueRepository.findAll();
+        return RevenueListResponse.map(revenues);
     }
 }
