@@ -1,6 +1,7 @@
 package br.com.alura.budgetapi.controller.request;
 
 import br.com.alura.budgetapi.model.Revenue;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,10 +15,13 @@ import java.time.LocalDate;
 @Setter
 public class RevenueRequest {
     @NotNull @NotEmpty
+    @JsonProperty("descricao")
     private String description;
     @NotNull @DecimalMin(value = "0", inclusive = false)
+    @JsonProperty("valor")
     private BigDecimal value;
     @NotNull
+    @JsonProperty("data")
     private LocalDate date;
 
     public Revenue toEntity() {
