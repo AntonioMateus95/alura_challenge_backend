@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/receitas")
@@ -43,5 +44,16 @@ public class RevenueController {
     public List<RevenueListResponse> list() {
         List<Revenue> revenues = revenueRepository.findAll();
         return RevenueListResponse.map(revenues);
+    }
+
+    @GetMapping
+    @RequestMapping("/{id}")
+    public ResponseEntity<RevenueResponse> getDetails(@PathVariable Long id) {
+        Optional<Revenue> entity = revenueRepository.findById(id);
+        if (entity.isPresent()) {
+            return ResponseEntity.ok(new RevenueResponse(entity.get()));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
