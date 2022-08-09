@@ -1,5 +1,6 @@
 package br.com.alura.budgetapi.model;
 
+import br.com.alura.budgetapi.validators.NonDuplicated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@NonDuplicated
 public class Revenue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

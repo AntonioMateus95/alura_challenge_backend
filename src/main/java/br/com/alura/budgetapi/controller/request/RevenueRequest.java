@@ -1,6 +1,7 @@
 package br.com.alura.budgetapi.controller.request;
 
 import br.com.alura.budgetapi.model.Revenue;
+import br.com.alura.budgetapi.validators.NonDuplicated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
