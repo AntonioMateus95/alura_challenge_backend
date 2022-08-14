@@ -29,6 +29,8 @@ public class MonthlyDuplicatedExpenseValidator implements ConstraintValidator<No
     public boolean isValid(ExpenseRequest value, ConstraintValidatorContext context) {
         Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         Long id = Objects.isNull(map.get("id")) ? null : Long.valueOf(map.get("id"));
+        if (id != null && !repository.existsById(id)) return true;
+
         LocalDate date = value.getDate();
         String description = value.getDescription();
         if (date == null || description == null) {
