@@ -23,10 +23,10 @@ public class RevenueController {
     @Autowired
     private RevenueRepository revenueRepository;
 
-    @PostMapping
     @Transactional
-    public ResponseEntity<RevenueResponse> create(@RequestBody @Valid RevenueRequest revenue, UriComponentsBuilder uriBuilder) {
-        Revenue entity = revenue.toEntity();
+    @PostMapping
+    public ResponseEntity<RevenueResponse> create(@RequestBody @Valid RevenueRequest form, UriComponentsBuilder uriBuilder) {
+        Revenue entity = form.toEntity();
         revenueRepository.save(entity);
 
         URI uri = uriBuilder.path("/{id}").buildAndExpand(entity.getId()).toUri();
@@ -42,17 +42,31 @@ public class RevenueController {
     @GetMapping("/{id}")
     public ResponseEntity<RevenueResponse> getDetails(@PathVariable Long id) {
         Optional<Revenue> entity = revenueRepository.findById(id);
-        return entity.map(revenue -> ResponseEntity.ok(new RevenueResponse(revenue))).orElseGet(() -> ResponseEntity.notFound().build());
+        if (entity.isPresent()) {
+            return ResponseEntity.ok(new RevenueResponse(entity.get()));
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/{id}")
     @Transactional
+    @PutMapping("/{id}")
     public ResponseEntity<RevenueResponse> update(@PathVariable Long id, @RequestBody @Valid RevenueRequest form) {
         Optional<Revenue> entity = revenueRepository.findById(id);
         if (entity.isPresent()) {
             Revenue revenue = entity.get();
             revenue.update(form);
             return ResponseEntity.ok(new RevenueResponse(revenue));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public ResponseEntity<RevenueResponse> remove(@PathVariable Long id) {
+        Optional<Revenue> entity = revenueRepository.findById(id);
+        if (entity.isPresent()) {
+            revenueRepository.deleteById(id);
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
