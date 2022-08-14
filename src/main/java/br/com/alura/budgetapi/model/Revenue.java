@@ -1,6 +1,6 @@
 package br.com.alura.budgetapi.model;
 
-import br.com.alura.budgetapi.validators.NonDuplicated;
+import br.com.alura.budgetapi.controller.request.RevenueRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +16,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@NonDuplicated
 public class Revenue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +23,10 @@ public class Revenue {
     private String description;
     private BigDecimal value;
     private LocalDate date;
+
+    public void update(RevenueRequest dto) {
+        this.setDescription(dto.getDescription());
+        this.setValue(dto.getValue());
+        this.setDate(dto.getDate());
+    }
 }

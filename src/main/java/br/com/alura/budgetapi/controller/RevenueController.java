@@ -42,10 +42,7 @@ public class RevenueController {
     @GetMapping("/{id}")
     public ResponseEntity<RevenueResponse> getDetails(@PathVariable Long id) {
         Optional<Revenue> entity = revenueRepository.findById(id);
-        if (entity.isPresent()) {
-            return ResponseEntity.ok(new RevenueResponse(entity.get()));
-        }
-        return ResponseEntity.notFound().build();
+        return entity.map(revenue -> ResponseEntity.ok(new RevenueResponse(revenue))).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PutMapping("/{id}")
@@ -53,7 +50,9 @@ public class RevenueController {
     public ResponseEntity<RevenueResponse> update(@PathVariable Long id, @RequestBody @Valid RevenueRequest form) {
         Optional<Revenue> entity = revenueRepository.findById(id);
         if (entity.isPresent()) {
-            return ResponseEntity.ok().build();
+            Revenue revenue = entity.get();
+            revenue.update(form);
+            return ResponseEntity.ok(new RevenueResponse(revenue));
         }
         return ResponseEntity.notFound().build();
     }

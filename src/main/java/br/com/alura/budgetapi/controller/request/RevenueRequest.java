@@ -14,6 +14,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@NonDuplicated
 public class RevenueRequest {
     @NotNull @NotEmpty
     @JsonProperty("descricao")
