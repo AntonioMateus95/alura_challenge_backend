@@ -1,6 +1,7 @@
 package br.com.alura.budgetapi.controller.request;
 
 import br.com.alura.budgetapi.model.Expense;
+import br.com.alura.budgetapi.model.ExpenseCategory;
 import br.com.alura.budgetapi.validators.NonDuplicated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -27,12 +28,15 @@ public class ExpenseRequest {
     @NotNull
     @JsonProperty("data")
     private LocalDate date;
+    @JsonProperty("categoria")
+    private ExpenseCategory category = ExpenseCategory.OTHERS;
 
     public Expense toEntity() {
         Expense entity = new Expense();
         entity.setDate(this.date);
         entity.setDescription(this.description);
         entity.setValue(this.value);
+        entity.setCategory(this.category);
         return entity;
     }
 }

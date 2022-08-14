@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -23,10 +20,14 @@ public class Expense {
     private String description;
     private BigDecimal value;
     private LocalDate date;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 32, columnDefinition = "varchar(32) default 'OTHERS'")
+    private ExpenseCategory category;
 
     public void update(ExpenseRequest form) {
         this.setDescription(form.getDescription());
         this.setValue(form.getValue());
         this.setDate(form.getDate());
+        this.setCategory(form.getCategory());
     }
 }
