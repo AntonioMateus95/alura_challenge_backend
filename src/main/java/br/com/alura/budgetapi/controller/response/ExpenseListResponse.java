@@ -1,6 +1,6 @@
 package br.com.alura.budgetapi.controller.response;
 
-import br.com.alura.budgetapi.model.Revenue;
+import br.com.alura.budgetapi.model.Expense;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class RevenueListResponse {
+public class ExpenseListResponse {
     @JsonProperty("data")
     private LocalDate date;
     @JsonProperty("descricao")
@@ -18,13 +18,13 @@ public class RevenueListResponse {
     @JsonProperty("valor")
     private BigDecimal value;
 
-    public RevenueListResponse(Revenue revenue) {
-        this.date = revenue.getDate();
-        this.description = revenue.getDescription();
-        this.value = revenue.getValue();
+    public ExpenseListResponse(Expense expense) {
+        this.date = expense.getDate();
+        this.description = expense.getDescription();
+        this.value = expense.getValue();
     }
 
-    public static List<RevenueListResponse> map(List<Revenue> items) {
-        return items.stream().map(RevenueListResponse::new).collect(Collectors.toList());
+    public static List<ExpenseListResponse> map(List<Expense> items) {
+        return items.stream().map(ExpenseListResponse::new).collect(Collectors.toList());
     }
 }

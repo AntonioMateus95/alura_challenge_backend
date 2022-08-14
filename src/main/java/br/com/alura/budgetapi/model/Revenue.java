@@ -24,9 +24,9 @@ public class Revenue {
     private BigDecimal value;
     private LocalDate date;
 
-    public void update(RevenueRequest dto) {
-        this.setDescription(dto.getDescription());
-        this.setValue(dto.getValue());
-        this.setDate(dto.getDate());
+    public void update(RevenueRequest form) {
+        this.setDescription(form.getDescription());
+        this.setValue(form.getValue());
+        this.setDate(form.getDate());
     }
 }

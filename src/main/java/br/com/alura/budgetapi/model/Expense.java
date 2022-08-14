@@ -1,5 +1,6 @@
 package br.com.alura.budgetapi.model;
 
+import br.com.alura.budgetapi.controller.request.ExpenseRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,4 +23,10 @@ public class Expense {
     private String description;
     private BigDecimal value;
     private LocalDate date;
+
+    public void update(ExpenseRequest form) {
+        this.setDescription(form.getDescription());
+        this.setValue(form.getValue());
+        this.setDate(form.getDate());
+    }
 }

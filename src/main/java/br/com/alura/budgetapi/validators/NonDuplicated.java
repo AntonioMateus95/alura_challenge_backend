@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = { MonthlyDuplicatedRevenueValidator.class })
+@Constraint(validatedBy = { MonthlyDuplicatedRevenueValidator.class, MonthlyDuplicatedExpenseValidator.class })
 public @interface NonDuplicated {
 
     String message() default "duplicated registry";

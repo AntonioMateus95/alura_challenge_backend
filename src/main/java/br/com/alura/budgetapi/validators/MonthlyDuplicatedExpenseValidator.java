@@ -1,8 +1,8 @@
 package br.com.alura.budgetapi.validators;
 
-import br.com.alura.budgetapi.controller.request.RevenueRequest;
-import br.com.alura.budgetapi.model.Revenue;
-import br.com.alura.budgetapi.repository.RevenueRepository;
+import br.com.alura.budgetapi.controller.request.ExpenseRequest;
+import br.com.alura.budgetapi.model.Expense;
+import br.com.alura.budgetapi.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -14,10 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class MonthlyDuplicatedRevenueValidator implements ConstraintValidator<NonDuplicated, RevenueRequest> {
-
+public class MonthlyDuplicatedExpenseValidator implements ConstraintValidator<NonDuplicated, ExpenseRequest> {
     @Autowired
-    private RevenueRepository repository;
+    private ExpenseRepository repository;
 
     @Autowired
     private HttpServletRequest request;
@@ -27,7 +26,7 @@ public class MonthlyDuplicatedRevenueValidator implements ConstraintValidator<No
     }
 
     @Override
-    public boolean isValid(RevenueRequest value, ConstraintValidatorContext context) {
+    public boolean isValid(ExpenseRequest value, ConstraintValidatorContext context) {
         Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         Long id = Objects.isNull(map.get("id")) ? null : Long.valueOf(map.get("id"));
         LocalDate date = value.getDate();
@@ -36,7 +35,7 @@ public class MonthlyDuplicatedRevenueValidator implements ConstraintValidator<No
             return true;
         }
 
-        List<Revenue> existingOnes = repository.findAllByMonthAndDescription(date.getMonth().getValue(), description, id);
+        List<Expense> existingOnes = repository.findAllByMonthAndDescription(date.getMonth().getValue(), description, id);
         return existingOnes.isEmpty();
     }
 }
