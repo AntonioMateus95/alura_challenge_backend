@@ -34,8 +34,13 @@ public class ExpenseController {
     }
 
     @GetMapping
-    public List<ExpenseListResponse> list() {
-        List<Expense> expenses = expenseRepository.findAll();
+    public List<ExpenseListResponse> list(@RequestParam("descricao") Optional<String> description) {
+        List<Expense> expenses;
+        if (description.isPresent()) {
+            expenses = expenseRepository.searchByDescriptionContainingIgnoreCase(description.get());
+        } else {
+            expenses = expenseRepository.findAll();
+        }
         return ExpenseListResponse.map(expenses);
     }
 

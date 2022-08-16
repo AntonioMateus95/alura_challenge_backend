@@ -34,8 +34,13 @@ public class RevenueController {
     }
 
     @GetMapping
-    public List<RevenueListResponse> list() {
-        List<Revenue> revenues = revenueRepository.findAll();
+    public List<RevenueListResponse> list(@RequestParam("descricao") Optional<String> description) {
+        List<Revenue> revenues;
+        if (description.isPresent()) {
+            revenues = revenueRepository.searchByDescriptionContainingIgnoreCase(description.get());
+        } else {
+            revenues = revenueRepository.findAll();
+        }
         return RevenueListResponse.map(revenues);
     }
 
