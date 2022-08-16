@@ -44,6 +44,12 @@ public class ExpenseController {
         return ExpenseListResponse.map(expenses);
     }
 
+    @GetMapping("/{year}/{month}")
+    public List<ExpenseListResponse> listByYearAndMonth(@PathVariable Integer year, @PathVariable Integer month) {
+        List<Expense> expenses = expenseRepository.findAllByYearAndMonth(year, month);
+        return ExpenseListResponse.map(expenses);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ExpenseResponse> getDetails(@PathVariable Long id) {
         Optional<Expense> entity = expenseRepository.findById(id);

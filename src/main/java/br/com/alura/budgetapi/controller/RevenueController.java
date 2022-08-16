@@ -44,6 +44,12 @@ public class RevenueController {
         return RevenueListResponse.map(revenues);
     }
 
+    @GetMapping("/{year}/{month}")
+    public List<RevenueListResponse> listByYearAndMonth(@PathVariable Integer year, @PathVariable Integer month) {
+        List<Revenue> revenues = revenueRepository.findAllByYearAndMonth(year, month);
+        return RevenueListResponse.map(revenues);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<RevenueResponse> getDetails(@PathVariable Long id) {
         Optional<Revenue> entity = revenueRepository.findById(id);
