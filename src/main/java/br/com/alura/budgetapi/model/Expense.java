@@ -13,15 +13,16 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "expenses")
 public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+    @Column(name = "total_value")
     private BigDecimal value;
     private LocalDate date;
     @Enumerated(EnumType.STRING)
-    @Column(length = 32, columnDefinition = "varchar(32) default 'OTHERS'")
     private ExpenseCategory category;
 
     public void update(ExpenseRequest form) {
