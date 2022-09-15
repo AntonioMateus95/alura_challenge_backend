@@ -1,6 +1,7 @@
 package br.com.alura.budgetapi.model;
 
 import br.com.alura.budgetapi.controller.request.ExpenseRequest;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "expenses")
 public class Expense {
     @Id

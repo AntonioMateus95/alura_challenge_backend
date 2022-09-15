@@ -1,0 +1,2 @@
+INSERT INTO revenues (id, date, description, total_value) values (1, '2022-08-05', 'Salário', 2500);
+INSERT INTO revenues (id, date, description, total_value) values (2, '2022-08-10', 'Freelancer', 500);

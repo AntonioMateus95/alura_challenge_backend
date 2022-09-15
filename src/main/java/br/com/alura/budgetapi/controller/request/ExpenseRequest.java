@@ -4,6 +4,7 @@ import br.com.alura.budgetapi.model.Expense;
 import br.com.alura.budgetapi.model.ExpenseCategory;
 import br.com.alura.budgetapi.validators.NonDuplicated;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NonDuplicated
+@AllArgsConstructor
 public class ExpenseRequest {
     @NotNull
     @NotEmpty
