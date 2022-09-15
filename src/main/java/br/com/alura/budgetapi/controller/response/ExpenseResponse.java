@@ -1,6 +1,7 @@
 package br.com.alura.budgetapi.controller.response;
 
 import br.com.alura.budgetapi.model.Expense;
+import br.com.alura.budgetapi.model.ExpenseCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,11 +19,14 @@ public class ExpenseResponse {
     private String description;
     @JsonProperty("valor")
     private BigDecimal value;
+    @JsonProperty("categoria")
+    private ExpenseCategory category;
 
     public ExpenseResponse(Expense expense) {
         this.id = expense.getId();
         this.date = expense.getDate();
         this.description = expense.getDescription();
         this.value = expense.getValue();
+        this.category = expense.getCategory();
     }
 }
