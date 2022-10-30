@@ -1,7 +1,6 @@
 package br.com.alura.budgetapi.controller;
 
 import br.com.alura.budgetapi.config.security.jwt.JwtUtils;
-import br.com.alura.budgetapi.config.security.services.UserDetailsImpl;
 import br.com.alura.budgetapi.controller.request.LoginRequest;
 import br.com.alura.budgetapi.controller.request.SignupRequest;
 import br.com.alura.budgetapi.controller.response.JwtResponse;
@@ -44,22 +43,17 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getUsername(),
-                userDetails.getEmail()));
+        return ResponseEntity.ok(new JwtResponse(jwt));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("Username já está sendo usado!"));
         }
 
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+            return ResponseEntity.badRequest().body(new MessageResponse("E-mail já está sendo usado!"));
         }
 
         // Create new user's account
@@ -68,6 +62,6 @@ public class AuthController {
                 encoder.encode(signupRequest.getPassword()));
 
         userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Usuário cadastrado com sucesso"));
     }
 }
